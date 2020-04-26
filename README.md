@@ -74,7 +74,32 @@ Jika persyaratan di atas terlanggar, maka kedua directory tersebut tidak akan te
 
 
 ## 04. Log system:
+- A. Sebuah berkas nantinya akan terbentuk bernama ```"fs.log"``` di direktori *home* pengguna ```(/home/[user]/fs.log)``` yang berguna menyimpan daftar perintah system call yang telah dijalankan.
+- B. Agar nantinya pencatatan lebih rapi dan terstruktur, log akan dibagi menjadi beberapa level yaitu __INFO__ dan __WARNING.__ 
+- C. Untuk log level __WARNING__, merupakan pencatatan log untuk syscall ```rmdir``` dan ```unlink```.
+- D. Sisanya, akan dicatat dengan level __INFO__.
+- E. Format untuk logging yaitu : 
+```
+=======================================================
+[LEVEL]::[yy][mm][dd]-[HH]:[MM]:[SS]::[CMD]::[DESC ...]
+=======================================================
+```
+- LEVEL    : Level logging 
+- yy       : Tahun dua digit 
+- mm       : Bulan dua digit 
+- dd       : Hari dua digit 
+- HH       : Jam dua digit 
+- MM       : Menit dua digit 
+- SS       : Detik dua digit 
+- CMD      : System call yang terpanggil 
+- DESC     : Deskripsi tambahan (bisa lebih dari satu, dipisahkan dengan ::)
 
+Contoh format logging nantinya seperti : 
+```
+INFO::200419-18:29:28::MKDIR::/iz1  
+INFO::200419-18:29:33::CREAT::/iz1/yena.jpg  
+INFO::200419-18:29:33::RENAME::/iz1/yena.jpg::/iz1/yena.jpeg 
+```
 
 ### Source Code : 
 
