@@ -53,6 +53,15 @@ __Note : Dalam penamaan file ‘/’ diabaikan, dan ekstensi tidak perlu di encr
 
 
 ## 03. Sinkronisasi direktori otomatis:
+Tanpa mengurangi keumuman, misalkan suatu directory bernama ```dir``` akan tersinkronisasi dengan directory yang memiliki nama yang sama dengan awalan sync_ yaitu ```sync_dir```. Persyaratan untuk sinkronisasi yaitu :
+- A. Kedua directory memiliki ***parent directory*** yang sama.
+- B. Kedua directory kosong atau memiliki isi yang sama. Dua directory dapat dikatakan memiliki isi yang sama jika memenuhi : \
+***i.*** Nama dari setiap berkas di dalamnya sama. \
+***ii.*** ***Modified time*** dari setiap berkas di dalamnya tidak berselisih lebih dari 0.1 detik.
+- C. Sinkronisasi dilakukan ke seluruh isi dari kedua directory tersebut, tidak hanya di satu ***child directory*** saja. 
+- D. Sinkronisasi mencakup pembuatan berkas/directory, penghapusan berkas/directory, dan pengubahan berkas/directory. 
+ 
+Jika persyaratan di atas terlanggar, maka kedua directory tersebut tidak akan tersinkronisasi lagi. Implementasi dilarang menggunakan ***symbolic links*** dan ***thread***.
 
 
 ### Source Code : 
