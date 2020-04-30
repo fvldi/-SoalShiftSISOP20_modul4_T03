@@ -16,12 +16,19 @@ Berikut adalah detail filesystem rancangan jasir:
 - D. Setiap pembuatan direktori terenkripsi baru (mkdir ataupun rename) akan tercatat ke sebuah database/log berupa file.
 - E. Semua file yang berada dalam direktori ter enkripsi menggunakan caesar cipher dengan key.
 
-```9(ku@AW1[Lmvgax6q`5Y2Ry?+sF!^HKQiBXCUSe&0M.b%rI'7d)o4~VfZ*{#:}ETt$3J-zpc]lnh8,GwP_ND|jO```
+    ```
+    9(ku@AW1[Lmvgax6q`5Y2Ry?+sF!^HKQiBXCUSe&0M.b%rI'7d)o4~VfZ*{#:}ETt$3J-zpc]lnh8,GwP_ND|jO
+    ```
 
-Misal kan ada file bernama “kelincilucu.jpg” dalam directory FOTO_PENTING, dan key yang dipakai adalah 10
-__“encv1_rahasia/FOTO_PENTING/kelincilucu.jpg” => “encv1_rahasia/ULlL@u]AlZA(/g7D.|_.Da_a.jpg__
+    Misal kan ada file bernama ```“kelincilucu.jpg”``` dalam directory FOTO_PENTING, dan key yang dipakai adalah ```10```
+    
+     ```
+    “encv1_rahasia/FOTO_PENTING/kelincilucu.jpg” => “encv1_rahasia/ULlL@u]AlZA(/g7D.|_.Da_a.jpg
+    ```  
 
-__Note : Dalam penamaan file ‘/’ diabaikan, dan ekstensi tidak perlu di encrypt.__
+
+    __Note : Dalam penamaan file ‘/’ diabaikan, dan ekstensi tidak perlu di encrypt.__
+
 - F. Metode enkripsi pada suatu direktori juga berlaku kedalam direktori lainnya yang ada didalamnya.
  
 
