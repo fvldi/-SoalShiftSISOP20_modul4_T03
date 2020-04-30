@@ -646,5 +646,4 @@ Cara kerjanya ialah dengan membuka file ```fs.log```, kemudian mengisinya sesuai
 
 ## Kendala :
 
-1. Pada soal nomor 1, untuk file yang telah terdecrypt masih belum dapat dibuka.
-2. Kurangnya pemahaman praktikan terhadap soal nomor 2 dan 3 sehingga belum dapat dikerjakan.
+1. Kurangnya pemahaman praktikan terhadap soal nomor 2 dan 3 sehingga belum dapat dikerjakan. 
