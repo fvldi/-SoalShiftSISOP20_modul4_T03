@@ -493,6 +493,15 @@ char* Encrypt(char enc[100]){
 }
 ```
 
+Cara kerja fungsi encrypt ialah, dengan mengecek diposisi manakah huruf teks```[i]``` pada huruf caesar (anggap di posisi ```j```), kemudian menggantikan huruf pada teks```[i]``` dengan huruf caesar yang berada pada posisi ```j+10```. Fungsi decrypt ialah fungsi untuk mengembalikan nama yang telah terenkripsi menjadi seperti semula, cara kerjanya ialah dengan mengecek di posisi manakah huruf teks```[i]``` yang telah terenkripsi pada huruf caesar, kemudian dikembalikan lagi dengan cara mengubahnya dengan huruf caesar yang berada pada posisi ```j-10```
+
+Misal kan ada file bernama ```“kelincilucu.jpg”``` dalam directory ```FOTO_PENTING```, dan key yang dipakai adalah ```10```
+
+```
+“encv1_rahasia/FOTO_PENTING/kelincilucu.jpg” => “encv1_rahasia/ULlL@u]AlZA(/g7D.|_.Da_a.jpg
+```
+
+Untuk membuatnya, pada fungsi ```xmp_readdir```, kita harus mengecek apakah path tersebut memiliki parent dengan substring nama ```"encv1_"``` atau ```"/encv1_"```. Jika benar, maka kita harus mengeknripsi seluruh child pathnya. Pengecekan ini juga berlaku untuk fungsi ```read```, ```remove```, ```getattr``` dll.
 
 ### Output :
 
