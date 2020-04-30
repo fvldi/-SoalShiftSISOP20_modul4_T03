@@ -503,6 +503,59 @@ Misal kan ada file bernama ```“kelincilucu.jpg”``` dalam directory ```FOTO_P
 
 Untuk membuatnya, pada fungsi ```xmp_readdir```, kita harus mengecek apakah path tersebut memiliki parent dengan substring nama ```"encv1_"``` atau ```"/encv1_"```. Jika benar, maka kita harus mengeknripsi seluruh child pathnya. Pengecekan ini juga berlaku untuk fungsi ```read```, ```remove```, ```getattr``` dll.
 
+```c
+/* Fungsi untuk mengambil nama path dari folder terenkripsi
+dengan '/' pada path[0] */
+char *checkEncryptslash(char fpath[100],const char *path)
+{
+    int i,j;
+    char rev[100],fname[1000];
+        memset(rev,'\0',100);
+        memset(fname,'\0',1000);
+        for (i = 0; i<strlen(path); i++)
+        {
+            if ((path[i]=='/' && i!=0) || path[i]=='\0')
+            {
+                break;
+            }
+            rev[i] = path[i];
+        }
+        // Mengambil path folder enkripsi
+        sprintf(fname,"%s",rev);
+        memset(rev,'\0',100);
+        j=0;
+
+        /* Jika terdapat foler/file pada folder enkripsi
+        maka nama path diambil */
+        if (i!=strlen(path))
+        {
+            while (1){
+                rev[j] = path[i];
+                i++;
+                j++;
+                if(i==strlen(path))
+                {
+                    break;
+                }
+            }
+            // Mengenkripsi nama path didalam folder enkripsi
+            Encrypt(rev);
+            // Menggabungkan fullpath folder enkripsi
+            strcat(fname,rev);
+            // Menggabungkan fullpath dengan directory
+            sprintf(fpath, "%s%s", dirpath, fname);
+        }
+        else
+        {
+            // Jika tidak terdapat file/folder didalam folder terenkripsi
+            sprintf(fpath, "%s%s", dirpath, fname);
+        }
+    return fpath;
+}
+```
+
+Fungsi ini akan mengambil dan mengenkripsi child path dari folder yang terenkripsi. Contoh : ````encv1_XXX/encrypted/encrypted```` Kemudian kembali digabung dengan directorypath nya.
+
 ### Output :
 
 
