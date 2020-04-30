@@ -444,9 +444,53 @@ Semua file yang berada dalam direktori ter enkripsi menggunakan caesar cipher de
 Fungsi encrypt dan decrypt :
 
 ```c
+// Fungsi untuk decrypt
+char* Decrypt(char dec[100]){
+    char caesar[] = "9(ku@AW1[Lmvgax6q`5Y2Ry?+sF!^HKQiBXCUSe&0M.b%rI'7d)o4~VfZ*{#:}ETt$3J-zpc]lnh8,GwP_ND|jO";
+    int z, i, j;
 
+    for (i=0; dec[i]!='\0'; i++){
+        for (j=0; j<strlen(caesar); j++)
+        {
+            if(dec[i] == caesar[j]){
+                break;
+            }
+        }
+        z = (j-10)%87;
+        if(z < 0){
+            z = z + strlen(caesar);
+        }
+        if(dec[i] == '.' && (strlen(dec)-i)<5)break;
+        else if(dec[i] != '/'){
+            dec[i] = caesar[z];
+        }else{
+            dec[i] = '/';
+        }
+    }
+    return dec;
+}
 
+// Fungsi untuk encrypt
+char* Encrypt(char enc[100]){
+    char caesar[] = "9(ku@AW1[Lmvgax6q`5Y2Ry?+sF!^HKQiBXCUSe&0M.b%rI'7d)o4~VfZ*{#:}ETt$3J-zpc]lnh8,GwP_ND|jO";
+    int i, j;
 
+    for (i=0; enc[i]!='\0'; i++){
+        for (j=0; j<strlen(caesar); j++)
+        {
+            if(enc[i] == caesar[j]){
+                break;
+            }
+        }
+        if(enc[i] == '.' && (strlen(enc)-i)<5)break;
+        else if(enc[i] != '/'){
+            enc[i] = caesar[(j+10)%87];
+        }else{
+            enc[i] = '/';
+        }
+    }
+    return enc;
+}
 ```
 
 
