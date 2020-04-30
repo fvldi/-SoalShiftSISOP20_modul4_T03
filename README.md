@@ -559,44 +559,6 @@ Fungsi ini akan mengambil dan mengenkripsi child path dari folder yang terenkrip
 ### Output :
 
 
-## 02. Enkripsi versi 2
-- A. Jika sebuah direktori dibuat dengan awalan ```“encv2_”```, maka direktori tersebut akan menjadi direktori terenkripsi menggunakan metode enkripsi v2. 
-- B. Jika sebuah direktori di-rename dengan awalan ```“encv2_”```, maka direktori tersebut akan menjadi direktori terenkripsi menggunakan metode enkripsi v2.
-- C. Apabila sebuah direktori terenkripsi di-rename menjadi tidak terenkripsi, maka isi direktori tersebut akan terdekrip.
-- D. Setiap pembuatan direktori terenkripsi baru (mkdir ataupun rename) akan tercatat ke sebuah database/log berupa file.
-- E. Pada enkripsi v2, file-file pada direktori asli akan menjadi bagian-bagian kecil sebesar 1024 bytes dan menjadi normal ketika diakses melalui filesystem rancangan jasir. Sebagai contoh, file ```File_Contoh.txt``` berukuran 5 kB pada direktori asli akan menjadi 5 file kecil yakni : ```File_Contoh.txt.000```, ```File_Contoh.txt.001```, ```File_Contoh.txt.002```, ```File_Contoh.txt.003```, dan ```File_Contoh.txt.004```.
-- F. Metode enkripsi pada suatu direktori juga berlaku kedalam direktori lain yang ada didalam direktori tersebut (rekursif).
-
-
-### Source Code : 
-
-
-### Penjelasan : 
-
-
-### Output :
-
-
-## 03. Sinkronisasi direktori otomatis:
-Tanpa mengurangi keumuman, misalkan suatu directory bernama ```dir``` akan tersinkronisasi dengan directory yang memiliki nama yang sama dengan awalan sync_ yaitu ```sync_dir```. Persyaratan untuk sinkronisasi yaitu :
-- A. Kedua directory memiliki ***parent directory*** yang sama.
-- B. Kedua directory kosong atau memiliki isi yang sama. Dua directory dapat dikatakan memiliki isi yang sama jika memenuhi : \
-***i.*** Nama dari setiap berkas di dalamnya sama. \
-***ii.*** ***Modified time*** dari setiap berkas di dalamnya tidak berselisih lebih dari 0.1 detik.
-- C. Sinkronisasi dilakukan ke seluruh isi dari kedua directory tersebut, tidak hanya di satu ***child directory*** saja. 
-- D. Sinkronisasi mencakup pembuatan berkas/directory, penghapusan berkas/directory, dan pengubahan berkas/directory. 
- 
-Jika persyaratan di atas terlanggar, maka kedua directory tersebut tidak akan tersinkronisasi lagi. Implementasi dilarang menggunakan ***symbolic links*** dan ***thread***.
-
-
-### Source Code : 
-
-
-### Penjelasan : 
-
-
-### Output :
-
 
 ## 04. Log system:
 - A. Sebuah berkas nantinya akan terbentuk bernama ```"fs.log"``` di direktori *home* pengguna ```(/home/[user]/fs.log)``` yang berguna menyimpan daftar perintah system call yang telah dijalankan.
@@ -626,11 +588,50 @@ INFO::200419-18:29:33::CREAT::/iz1/yena.jpg 
 INFO::200419-18:29:33::RENAME::/iz1/yena.jpg::/iz1/yena.jpeg 
 ```
 
-### Source Code : 
-
-
 ### Penjelasan : 
 
+```c
+// Fungsi untuk membuat log
+void createlog(char process[100],char fpath[100])
+{
+    char text[200];
+    FILE *fp = fopen("/root/Documents/fs.log","a");
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+    if (strcmp(process,"unlink")==0)
+    {
+        sprintf(text, "WARNING::%04d%02d%02d-%02d:%02d:%02d::UNLINK::%s\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec,fpath);
+    }
+    else if (strcmp(process,"mkdir")==0)
+    {
+        sprintf(text, "INFO::%04d%02d%02d-%02d:%02d:%02d::MKDIR::%s\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec,fpath);
+    }
+    else if (strcmp(process,"rmdir")==0)
+    {
+        sprintf(text, "WARNING::%04d%02d%02d-%02d:%02d:%02d::RMDIR::%s\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec,fpath);
+    }
+    for (int i = 0; text[i] != '\0'; i++) {
+            fputc(text[i], fp);
+    }
+    fclose (fp);
+}
+
+// Fungsi untuk membuat log khusus proses rename
+void createlogrename(char from[100], char to[100])
+{
+    FILE *fp = fopen("/root/Documents/fs.log","a");
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+    char text[200];
+    sprintf(text, "INFO::%04d%02d%02d-%02d:%02d:%02d::RENAME::%s::%s\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec,from,to);
+    for (int i = 0; text[i] != '\0'; i++) {
+            fputc(text[i], fp);
+    }
+    fclose(fp);
+}
+```
+
+Cara kerjanya ialah dengan membuka file ```fs.log```, kemudian mengisinya sesuai dengan permintaan. Khusus untuk log ```rename```, fungsi akan meminta path awal dan path akhir untuk mengisinya kedalam file ```fs.log```
 
 ### Output :
 
