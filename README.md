@@ -565,7 +565,7 @@ Fungsi ini akan mengambil dan mengenkripsi child path dari folder yang terenkrip
 
 ### Output :
 
-
+![-f](/output/encv1.png)
 
 ## 04. Log system:
 - A. Sebuah berkas nantinya akan terbentuk bernama ```"fs.log"``` di direktori *home* pengguna ```(/home/[user]/fs.log)``` yang berguna menyimpan daftar perintah system call yang telah dijalankan.
@@ -642,6 +642,7 @@ Cara kerjanya ialah dengan membuka file ```fs.log```, kemudian mengisinya sesuai
 
 ### Output :
 
+![-f](/output/logSystem.png)
 
 ## Kendala :
 
