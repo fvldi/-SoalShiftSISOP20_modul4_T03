@@ -15,7 +15,7 @@
 
 static const char *dirpath = "/root/Documents";
 
-//fungsi untuk decrypt
+// Fungsi untuk decrypt
 char* Decrypt(char dec[100]){
     char caesar[] = "9(ku@AW1[Lmvgax6q`5Y2Ry?+sF!^HKQiBXCUSe&0M.b%rI'7d)o4~VfZ*{#:}ETt$3J-zpc]lnh8,GwP_ND|jO";
     int z, i, j;
@@ -41,7 +41,7 @@ char* Decrypt(char dec[100]){
     return dec;
 }
 
-//fungsi untuk encrypt
+// Fungsi untuk encrypt
 char* Encrypt(char enc[100]){
     char caesar[] = "9(ku@AW1[Lmvgax6q`5Y2Ry?+sF!^HKQiBXCUSe&0M.b%rI'7d)o4~VfZ*{#:}ETt$3J-zpc]lnh8,GwP_ND|jO";
     int i, j;
@@ -63,7 +63,7 @@ char* Encrypt(char enc[100]){
     return enc;
 }
 
-//fungsi untuk mengambil nama path dari folder terenkripsi
+// Fungsi untuk mengambil nama path dari folder terenkripsi
 char *checkEncrypt(char fpath[100],const char *path)
 {
     int i,j;
@@ -108,8 +108,8 @@ char *checkEncrypt(char fpath[100],const char *path)
     return fpath;
 }
 
-/*fungsi untuk mengambil nama path dari folder terenkripsi
-dengan '/' pada path[0]*/
+/* Fungsi untuk mengambil nama path dari folder terenkripsi
+dengan '/' pada path[0] */
 char *checkEncryptslash(char fpath[100],const char *path)
 {
     int i,j;
@@ -124,13 +124,13 @@ char *checkEncryptslash(char fpath[100],const char *path)
             }
             rev[i] = path[i];
         }
-        //mengambil path folder enkripsi
+        // Mengambil path folder enkripsi
         sprintf(fname,"%s",rev);
         memset(rev,'\0',100);
         j=0;
 
-        /*jika terdapat foler/file pada folder enkripsi
-        maka nama path diambil*/
+        /* Jika terdapat foler/file pada folder enkripsi
+        maka nama path diambil */
         if (i!=strlen(path))
         {
             while (1){
@@ -142,22 +142,22 @@ char *checkEncryptslash(char fpath[100],const char *path)
                     break;
                 }
             }
-            //mengenkripsi nama path didalam folder enkripsi
+            // Mengenkripsi nama path didalam folder enkripsi
             Encrypt(rev);
-            //menggabungkan fullpath folder enkripsi
+            // Menggabungkan fullpath folder enkripsi
             strcat(fname,rev);
-            //menggabungkan fullpath dengan directory
+            // Menggabungkan fullpath dengan directory
             sprintf(fpath, "%s%s", dirpath, fname);
         }
         else
         {
-            //jika tidak terdapat file/folder didalam folder terenkripsi
+            // Jika tidak terdapat file/folder didalam folder terenkripsi
             sprintf(fpath, "%s%s", dirpath, fname);
         }
     return fpath;
 }
 
-//fungsi untuk membuat log
+// Fungsi untuk membuat log
 void createlog(char process[100],char fpath[100])
 {
     char text[200];
@@ -182,7 +182,7 @@ void createlog(char process[100],char fpath[100])
     fclose (fp);
 }
 
-//fungsi untuk membuat log khusus proses rename
+// Fungsi untuk membuat log khusus proses rename
 void createlogrename(char from[100], char to[100])
 {
     FILE *fp = fopen("/root/Documents/fs.log","a");
@@ -259,9 +259,9 @@ static int xmp_readdir(const char *path, void *buf, fuse_fill_dir_t filler, off_
 		st.st_ino = de->d_ino;
 		st.st_mode = de->d_type << 12;
         if(strcmp(de->d_name, ".")!=0 && strcmp(de->d_name, "..")!=0 && flag==1){
-            /*mendecrypt nama file/folder didalam folder terenkripsi
+            /* Mendecrypt nama file/folder didalam folder terenkripsi
             sehingga pada fungsi getattr, nama file akan dienkripsi
-            menghasilkan nama file/folder yang asli*/
+            menghasilkan nama file/folder yang asli */
             Decrypt(de->d_name);
         }
         res = (filler(buf, de->d_name, &st, 0));
